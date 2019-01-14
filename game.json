@@ -173,6 +173,13 @@
         "metadata": "",
         "name": "sounds/Hl2_Rebel-Ragdoll485-573931361.mp3",
         "userAdded": true
+      },
+      {
+        "file": "sounds/Sleigh Bells Ringing-SoundBible.com-1890102065.mp3",
+        "kind": "audio",
+        "metadata": "",
+        "name": "sounds/Sleigh Bells Ringing-SoundBible.com-1890102065.mp3",
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -182,7 +189,11 @@
   "variables": [
     {
       "name": "score",
-      "value": ""
+      "value": "0"
+    },
+    {
+      "name": "running",
+      "value": "0"
     }
   ],
   "layouts": [
@@ -214,8 +225,18 @@
       },
       "objectsGroups": [
         {
-          "name": "Group",
-          "objects": []
+          "name": "Info",
+          "objects": [
+            {
+              "name": "StartGameButton"
+            },
+            {
+              "name": "Attribution"
+            },
+            {
+              "name": "Description"
+            }
+          ]
         }
       ],
       "variables": [],
@@ -243,8 +264,8 @@
           "locked": false,
           "name": "scoreText",
           "width": 0,
-          "x": 53.4844,
-          "y": 48,
+          "x": 27,
+          "y": 28,
           "zOrder": 2,
           "numberProperties": [],
           "stringProperties": [],
@@ -288,9 +309,39 @@
           "locked": false,
           "name": "StartGameButton",
           "width": 0,
-          "x": 315,
-          "y": 268,
+          "x": 317,
+          "y": 261,
           "zOrder": 5,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "Attribution",
+          "width": 0,
+          "x": 236,
+          "y": 175,
+          "zOrder": 6,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": false,
+          "height": 0,
+          "layer": "",
+          "locked": false,
+          "name": "Description",
+          "width": 0,
+          "x": 160,
+          "y": 117,
+          "zOrder": 7,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
@@ -604,6 +655,42 @@
               ]
             }
           ]
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "Description",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Avoid falling X-mas balls. Move player with left and\nright arrows. Survive as long as possible. Good Luck...",
+          "font": "",
+          "characterSize": 20,
+          "color": {
+            "b": 238,
+            "g": 46,
+            "r": 78
+          }
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "Attribution",
+          "smoothed": true,
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "Sound by Ragdoll485 and Mike Koenig @ soundbible.com",
+          "font": "",
+          "characterSize": 12,
+          "color": {
+            "b": 238,
+            "g": 46,
+            "r": 78
+          }
         }
       ],
       "events": [
@@ -751,8 +838,41 @@
         {
           "disabled": false,
           "folded": false,
-          "type": "BuiltinCommonInstructions::Repeat",
-          "repeatExpression": "6",
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "DepartScene"
+              },
+              "parameters": [
+                ""
+              ],
+              "subInstructions": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "inverted": false,
+                "value": "PlayMusic"
+              },
+              "parameters": [
+                "",
+                "sounds/Sleigh Bells Ringing-SoundBible.com-1890102065.mp3",
+                "no",
+                "25",
+                "1"
+              ],
+              "subInstructions": []
+            }
+          ],
+          "events": []
+        },
+        {
+          "disabled": false,
+          "folded": false,
+          "type": "BuiltinCommonInstructions::Standard",
           "conditions": [
             {
               "type": {
@@ -810,6 +930,18 @@
             {
               "type": {
                 "inverted": false,
+                "value": "VarGlobal"
+              },
+              "parameters": [
+                "running",
+                "=",
+                "0"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
                 "value": "BuiltinCommonInstructions::Once"
               },
               "parameters": [],
@@ -820,86 +952,22 @@
             {
               "type": {
                 "inverted": false,
-                "value": "Create"
-              },
-              "parameters": [
-                "",
-                "ball",
-                "RandomInRange(0, SceneWindowWidth() - 10)",
-                "-20",
-                ""
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "ChangeScale"
-              },
-              "parameters": [
-                "ball",
-                "/",
-                "6"
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "ModVarObjet"
-              },
-              "parameters": [
-                "ball",
-                "speed",
-                "=",
-                "RandomInRange(100, 200)"
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "ModVarObjet"
-              },
-              "parameters": [
-                "ball",
-                "rotation",
-                "=",
-                "RandomInRange(-10, 10) * 30"
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "ChangeAnimation"
-              },
-              "parameters": [
-                "ball",
-                "=",
-                "RandomInRange(0, 1)"
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
                 "value": "ModVarGlobal"
               },
               "parameters": [
-                "score",
+                "running",
                 "=",
-                "0"
+                "1"
               ],
               "subInstructions": []
             },
             {
               "type": {
                 "inverted": false,
-                "value": "Cache"
+                "value": "Arreter"
               },
               "parameters": [
-                "StartGameButton"
+                "Eye"
               ],
               "subInstructions": []
             },
@@ -916,10 +984,12 @@
             {
               "type": {
                 "inverted": false,
-                "value": "Arreter"
+                "value": "MettreY"
               },
               "parameters": [
-                "Eye"
+                "player",
+                "=",
+                "491"
               ],
               "subInstructions": []
             },
@@ -938,17 +1008,113 @@
             {
               "type": {
                 "inverted": false,
-                "value": "MettreY"
+                "value": "ModVarGlobal"
               },
               "parameters": [
-                "player",
+                "score",
                 "=",
-                "491"
+                "0"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "AjoutObjConcern"
+              },
+              "parameters": [
+                "",
+                "StartGameButton"
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "Cache"
+              },
+              "parameters": [
+                "Info"
               ],
               "subInstructions": []
             }
           ],
-          "events": []
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Repeat",
+              "repeatExpression": "6",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "ball",
+                    "RandomInRange(0, SceneWindowWidth() - 10)",
+                    "-20",
+                    ""
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeScale"
+                  },
+                  "parameters": [
+                    "ball",
+                    "/",
+                    "6"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "ball",
+                    "speed",
+                    "=",
+                    "RandomInRange(100, 200)"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarObjet"
+                  },
+                  "parameters": [
+                    "ball",
+                    "rotation",
+                    "=",
+                    "RandomInRange(-10, 10) * 30"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ChangeAnimation"
+                  },
+                  "parameters": [
+                    "ball",
+                    "=",
+                    "RandomInRange(0, 1)"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ]
         },
         {
           "disabled": false,
@@ -1080,14 +1246,6 @@
               "subInstructions": []
             }
           ],
-          "events": []
-        },
-        {
-          "disabled": false,
-          "folded": false,
-          "type": "BuiltinCommonInstructions::Standard",
-          "conditions": [],
-          "actions": [],
           "events": []
         },
         {
@@ -1379,8 +1537,20 @@
                 "value": "Montre"
               },
               "parameters": [
-                "StartGameButton",
+                "Info",
                 ""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "ModVarGlobal"
+              },
+              "parameters": [
+                "running",
+                "=",
+                "0"
               ],
               "subInstructions": []
             }
